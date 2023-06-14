@@ -22,7 +22,9 @@ import androidx.navigation.NavHostController
 import com.vanpra.composematerialdialogs.MaterialDialog
 import com.vanpra.composematerialdialogs.datetime.date.datepicker
 import com.vanpra.composematerialdialogs.rememberMaterialDialogState
+import id.ac.unpas.tubesppmkelompok6kelasd.ui.theme.Green
 import id.ac.unpas.tubesppmkelompok6kelasd.ui.theme.Purple700
+import id.ac.unpas.tubesppmkelompok6kelasd.ui.theme.Red
 import id.ac.unpas.tubesppmkelompok6kelasd.ui.theme.Teal200
 import kotlinx.coroutines.launch
 import java.time.format.DateTimeFormatter
@@ -125,11 +127,11 @@ fun FormMahasiswaScreen(navController : NavHostController, id: String? = null, m
         }
 
         val loginButtonColors = ButtonDefaults.buttonColors(
-            backgroundColor = Purple700,
+            backgroundColor = Green,
             contentColor = Teal200
         )
         val resetButtonColors = ButtonDefaults.buttonColors(
-            backgroundColor = Teal200,
+            backgroundColor = Red,
             contentColor = Purple700
         )
         Row (modifier = Modifier
@@ -166,6 +168,7 @@ fun FormMahasiswaScreen(navController : NavHostController, id: String? = null, m
                     ), modifier = Modifier.padding(8.dp)
                 )
             }
+            Spacer(modifier = Modifier.padding(6.dp))
             Button(modifier = Modifier.weight(5f), onClick = {
                 npm.value = TextFieldValue("")
                 nama.value = TextFieldValue("")

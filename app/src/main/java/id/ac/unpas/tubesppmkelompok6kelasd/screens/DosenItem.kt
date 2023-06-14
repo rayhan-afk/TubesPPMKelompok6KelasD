@@ -26,35 +26,42 @@ fun DosenItem(item: Dosen, navController: NavHostController, onDelete: (String) 
     val confirmationDialogState = rememberMaterialDialogState()
 
     Column(modifier = Modifier.fillMaxWidth()) {
-        Row(modifier = Modifier
-            .padding(15.dp)
-            .fillMaxWidth()) {
-            Column(modifier = Modifier.weight(4f)) {
-                Row {
-                    Column {
-                        Text(text = "NIDN", fontSize = 14.sp)
-                        Text(item.nidn, fontSize = 16.sp, fontWeight = FontWeight.Bold)
+        Card(
+            modifier = Modifier
+                .padding(15.dp)
+                .fillMaxWidth(),
+            elevation = 4.dp
+        ) {
+            Row(modifier = Modifier
+                .padding(15.dp)
+                .fillMaxWidth()) {
+                Column(modifier = Modifier.weight(4f)) {
+                    Row {
+                        Column {
+                            Text(text = "NIDN", fontSize = 14.sp)
+                            Text(item.nidn, fontSize = 16.sp, fontWeight = FontWeight.Bold)
+                        }
+                    }
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Row {
+                        Column {
+                            Text(text = "Pendidikan", fontSize = 14.sp)
+                            Text(text = item.pendidikan, fontSize = 16.sp, fontWeight = FontWeight.Bold)
+                        }
                     }
                 }
-                Spacer(modifier = Modifier.height(8.dp))
-                Row {
-                    Column {
-                        Text(text = "Pendidikan", fontSize = 14.sp)
-                        Text(text = item.pendidikan, fontSize = 16.sp, fontWeight = FontWeight.Bold)
-                    }
+                Column(modifier = Modifier.weight(8f)) {
+                    Text(text = "Nama", fontSize = 14.sp)
+                    Text("${item.gelar_depan} ${item.nama} ${item.gelar_belakang}", fontSize = 16.sp, fontWeight = FontWeight.Bold)
                 }
-            }
-            Column(modifier = Modifier.weight(8f)) {
-                Text(text = "Nama", fontSize = 14.sp)
-                Text("${item.gelar_depan} ${item.nama} ${item.gelar_belakang}", fontSize = 16.sp, fontWeight = FontWeight.Bold)
-            }
 
-            Icon(
-                Icons.Default.MoreVert,
-                modifier = Modifier.clickable {expanded = true },
-                contentDescription = null,
-                tint = Color.Unspecified
-            )
+                Icon(
+                    Icons.Default.MoreVert,
+                    modifier = Modifier.clickable {expanded = true },
+                    contentDescription = null,
+                    tint = Color.Unspecified
+                )
+            }
         }
 
         DropdownMenu(
@@ -80,9 +87,6 @@ fun DosenItem(item: Dosen, navController: NavHostController, onDelete: (String) 
             }
         }
     }
-
-    Divider(modifier = Modifier.fillMaxWidth())
-
 
     MaterialDialog(dialogState = confirmationDialogState,
         buttons = {

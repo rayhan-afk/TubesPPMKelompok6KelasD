@@ -29,48 +29,58 @@ NavHostController, onDelete: (String) -> Unit) {
     val subMenus = listOf("Edit", "Delete")
     val confirmationDialogState = rememberMaterialDialogState()
     Column(modifier = Modifier.fillMaxWidth()) {
-        Row(modifier = Modifier
-            .padding(15.dp)
-            .fillMaxWidth()) {
-            Column(modifier = Modifier.weight(2f)) {
-                Text(text = "Kode", fontSize = 14.sp)
-                Text(item.kode, fontSize = 16.sp, fontWeight = FontWeight.Bold)
-            }
-            Column(modifier = Modifier.weight(3f)) {
-                Text(text = "Nama", fontSize = 14.sp)
-                Text(text = item.nama, fontSize = 16.sp, fontWeight = FontWeight.Bold)
-            }
-            Column(modifier = Modifier.weight(1f), horizontalAlignment = Alignment.CenterHorizontally) {
-                Text(text = "SKS", fontSize = 14.sp)
-                Text(text = "${item.sks}", fontSize = 16.sp, fontWeight = FontWeight.Bold)
-            }
-            Column(modifier = Modifier.weight(2f), horizontalAlignment = Alignment.CenterHorizontally) {
-                Text(text = "Praktikum", fontSize = 14.sp)
-                Icon(
-                    imageVector = if (item.praktikum == 1) Icons.Default.Check else Icons.Default.Clear,
-                    contentDescription = "Status Praktikum",
-                    tint = if (item.praktikum == 1) Color.Green else Color.Red,
-                    modifier = Modifier.size(24.dp)
-                )
-            }
-
-            Icon(
-                Icons.Default.MoreVert,
-                modifier = Modifier.clickable {expanded = true },
-                contentDescription = null,
-                tint = Color.Unspecified
-            )
-        }
-        Row(
+        Card(
             modifier = Modifier
                 .padding(15.dp)
-                .fillMaxWidth()
+                .fillMaxWidth(),
+            elevation = 4.dp
         ) {
-            Column(modifier = Modifier.weight(2f)) {
-                Text(text = "Deskripsi", fontSize = 14.sp)
-                Text(item.deskripsi, fontSize = 16.sp, fontWeight = FontWeight.Bold)
+            Column {
+                Row(modifier = Modifier
+                    .padding(15.dp)
+                    .fillMaxWidth()) {
+                    Column(modifier = Modifier.weight(2f)) {
+                        Text(text = "Kode", fontSize = 14.sp)
+                        Text(item.kode, fontSize = 16.sp, fontWeight = FontWeight.Bold)
+                    }
+                    Column(modifier = Modifier.weight(3f)) {
+                        Text(text = "Nama", fontSize = 14.sp)
+                        Text(text = item.nama, fontSize = 16.sp, fontWeight = FontWeight.Bold)
+                    }
+                    Column(modifier = Modifier.weight(1f), horizontalAlignment = Alignment.CenterHorizontally) {
+                        Text(text = "SKS", fontSize = 14.sp)
+                        Text(text = "${item.sks}", fontSize = 16.sp, fontWeight = FontWeight.Bold)
+                    }
+                    Column(modifier = Modifier.weight(2f), horizontalAlignment = Alignment.CenterHorizontally) {
+                        Text(text = "Praktikum", fontSize = 14.sp)
+                        Icon(
+                            imageVector = if (item.praktikum == 1) Icons.Default.Check else Icons.Default.Clear,
+                            contentDescription = "Status Praktikum",
+                            tint = if (item.praktikum == 1) Color.Green else Color.Red,
+                            modifier = Modifier.size(24.dp)
+                        )
+                    }
+
+                    Icon(
+                        Icons.Default.MoreVert,
+                        modifier = Modifier.clickable {expanded = true },
+                        contentDescription = null,
+                        tint = Color.Unspecified
+                    )
+                }
+                Row(
+                    modifier = Modifier
+                        .padding(15.dp)
+                        .fillMaxWidth()
+                ) {
+                    Column(modifier = Modifier.weight(2f)) {
+                        Text(text = "Deskripsi", fontSize = 14.sp)
+                        Text(item.deskripsi, fontSize = 16.sp, fontWeight = FontWeight.Bold)
+                    }
+                }
             }
         }
+
         DropdownMenu(
             expanded = expanded,
             onDismissRequest = { expanded = false },

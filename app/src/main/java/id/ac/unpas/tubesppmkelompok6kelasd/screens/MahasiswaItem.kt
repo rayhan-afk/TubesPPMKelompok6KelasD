@@ -25,46 +25,54 @@ fun MahasiswaItem(item: Mahasiswa, navController: NavHostController, onDelete: (
     val subMenus = listOf("Edit", "Delete")
     val confirmationDialogState = rememberMaterialDialogState()
     Column(modifier = Modifier.fillMaxWidth()) {
-        Row(modifier = Modifier
-            .padding(15.dp)
-            .fillMaxWidth()) {
-            Column(modifier = Modifier.weight(2f)) {
-                Row {
-                    Column {
-                        Text(text = "NPM", fontSize = 14.sp)
-                        Text(item.npm, fontSize = 16.sp, fontWeight = FontWeight.Bold)
+        Card(
+            modifier = Modifier
+                .padding(15.dp)
+                .fillMaxWidth(),
+            elevation = 4.dp
+        ) {
+            Row(modifier = Modifier
+                .padding(15.dp)
+                .fillMaxWidth()) {
+                Column(modifier = Modifier.weight(2f)) {
+                    Row {
+                        Column {
+                            Text(text = "NPM", fontSize = 14.sp)
+                            Text(item.npm, fontSize = 16.sp, fontWeight = FontWeight.Bold)
+                        }
+                    }
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Row {
+                        Column {
+                            Text(text = "Tanggal Lahir", fontSize = 14.sp)
+                            Text(item.tanggal_lahir, fontSize = 16.sp, fontWeight = FontWeight.Bold)
+                        }
                     }
                 }
-                Spacer(modifier = Modifier.height(8.dp))
-                Row {
-                    Column {
-                        Text(text = "Tanggal Lahir", fontSize = 14.sp)
-                        Text(item.tanggal_lahir, fontSize = 16.sp, fontWeight = FontWeight.Bold)
+                Column(modifier = Modifier.weight(2f)) {
+                    Row {
+                        Column {
+                            Text(text = "Nama", fontSize = 14.sp)
+                            Text(text = item.nama, fontSize = 16.sp, fontWeight = FontWeight.Bold)
+                        }
+                    }
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Row {
+                        Column {
+                            Text(text = "Jenis Kelamin", fontSize = 14.sp)
+                            Text(item.jenis_kelamin, fontSize = 16.sp, fontWeight = FontWeight.Bold)
+                        }
                     }
                 }
+                Icon(
+                    Icons.Default.MoreVert,
+                    modifier = Modifier.clickable {expanded = true },
+                    contentDescription = null,
+                    tint = Color.Unspecified
+                )
             }
-            Column(modifier = Modifier.weight(2f)) {
-                Row {
-                    Column {
-                        Text(text = "Nama", fontSize = 14.sp)
-                        Text(text = item.nama, fontSize = 16.sp, fontWeight = FontWeight.Bold)
-                    }
-                }
-                Spacer(modifier = Modifier.height(8.dp))
-                Row {
-                    Column {
-                        Text(text = "Jenis Kelamin", fontSize = 14.sp)
-                        Text(item.jenis_kelamin, fontSize = 16.sp, fontWeight = FontWeight.Bold)
-                    }
-                }
-            }
-            Icon(
-                Icons.Default.MoreVert,
-                modifier = Modifier.clickable {expanded = true },
-                contentDescription = null,
-                tint = Color.Unspecified
-            )
         }
+
         DropdownMenu(
             expanded = expanded,
             onDismissRequest = { expanded = false },

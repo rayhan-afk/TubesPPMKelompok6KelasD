@@ -1,5 +1,6 @@
 package id.ac.unpas.tubesppmkelompok6kelasd.screens
 
+import android.graphics.Color
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -22,6 +23,9 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import id.ac.unpas.tubesppmkelompok6kelasd.model.Dosen
+import id.ac.unpas.tubesppmkelompok6kelasd.ui.theme.Blue
+import id.ac.unpas.tubesppmkelompok6kelasd.ui.theme.Green200
+import id.ac.unpas.tubesppmkelompok6kelasd.ui.theme.White
 import kotlinx.coroutines.launch
 
 @Composable
@@ -32,10 +36,17 @@ fun DosenScreen(navController : NavHostController, modifier: Modifier = Modifier
     val items: List<Dosen> by viewModel.list.observeAsState(initial = listOf())
 
     Column(modifier = modifier.fillMaxWidth()) {
-        Button(onClick = {
+        Button(modifier = Modifier
+            .padding(15.dp)
+            .fillMaxWidth(),
+            onClick = {
             navController.navigate("tambah-dosen")
-        }) {
-            Text(text = "Tambah")
+            },
+            colors = ButtonDefaults.buttonColors(
+                backgroundColor = Blue, // Warna latar belakang biru
+                contentColor = White // Warna teks putih
+            )) {
+            Text(text = "Tambah Data Dosen")
         }
 
         LazyColumn(modifier = Modifier.fillMaxWidth()) {

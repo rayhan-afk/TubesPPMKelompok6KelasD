@@ -22,6 +22,8 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import id.ac.unpas.tubesppmkelompok6kelasd.model.Mahasiswa
+import id.ac.unpas.tubesppmkelompok6kelasd.ui.theme.Blue
+import id.ac.unpas.tubesppmkelompok6kelasd.ui.theme.White
 import kotlinx.coroutines.launch
 
 @Composable
@@ -32,10 +34,17 @@ fun MahasiswaScreen(navController : NavHostController, modifier: Modifier = Modi
     val items: List<Mahasiswa> by viewModel.list.observeAsState(initial = listOf())
 
     Column(modifier = modifier.fillMaxWidth()) {
-        Button(onClick = {
-            navController.navigate("tambah-mahasiswa")
-        }) {
-            Text(text = "Tambah")
+        Button(modifier = Modifier
+            .padding(15.dp)
+            .fillMaxWidth(),
+            onClick = {
+                navController.navigate("tambah-mahasiswa")
+            },
+            colors = ButtonDefaults.buttonColors(
+                backgroundColor = Blue, // Warna latar belakang biru
+                contentColor = White // Warna teks putih
+            )) {
+            Text(text = "Tambah Data Mahasiswa")
         }
 
         LazyColumn(modifier = Modifier.fillMaxWidth()) {

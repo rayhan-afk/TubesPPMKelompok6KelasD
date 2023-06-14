@@ -19,7 +19,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import id.ac.unpas.tubesppmkelompok6kelasd.ui.theme.Green
 import id.ac.unpas.tubesppmkelompok6kelasd.ui.theme.Purple700
+import id.ac.unpas.tubesppmkelompok6kelasd.ui.theme.Red
 import id.ac.unpas.tubesppmkelompok6kelasd.ui.theme.Teal200
 import kotlinx.coroutines.launch
 
@@ -165,15 +167,15 @@ fun FormMatkulScreen(navController : NavHostController, id: String? = null, modi
             modifier = Modifier
                 .padding(4.dp)
                 .fillMaxWidth(),
-            placeholder = { Text(text = "IF231") }
+            placeholder = { Text(text = "Matkul ini...") }
         )
 
         val loginButtonColors = ButtonDefaults.buttonColors(
-            backgroundColor = Purple700,
+            backgroundColor = Green,
             contentColor = Teal200
         )
         val resetButtonColors = ButtonDefaults.buttonColors(
-            backgroundColor = Teal200,
+            backgroundColor = Red,
             contentColor = Purple700
         )
         Row (modifier = Modifier
@@ -212,6 +214,7 @@ fun FormMatkulScreen(navController : NavHostController, id: String? = null, modi
                     ), modifier = Modifier.padding(8.dp)
                 )
             }
+            Spacer(modifier = Modifier.padding(6.dp))
             Button(modifier = Modifier.weight(5f), onClick = {
                 kode.value = TextFieldValue("")
                 nama.value = TextFieldValue("")
