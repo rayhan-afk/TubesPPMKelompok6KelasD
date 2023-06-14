@@ -29,31 +29,29 @@ fun DosenItem(item: Dosen, navController: NavHostController, onDelete: (String) 
         Row(modifier = Modifier
             .padding(15.dp)
             .fillMaxWidth()) {
-            Column(modifier = Modifier.weight(3f)) {
-                Text(text = "NIDN", fontSize = 14.sp)
-                Text(item.nidn, fontSize = 16.sp, fontWeight = FontWeight.Bold)
+            Column(modifier = Modifier.weight(4f)) {
+                Row {
+                    Column {
+                        Text(text = "NIDN", fontSize = 14.sp)
+                        Text(item.nidn, fontSize = 16.sp, fontWeight = FontWeight.Bold)
+                    }
+                }
+                Spacer(modifier = Modifier.height(8.dp))
+                Row {
+                    Column {
+                        Text(text = "Pendidikan", fontSize = 14.sp)
+                        Text(text = item.pendidikan, fontSize = 16.sp, fontWeight = FontWeight.Bold)
+                    }
+                }
             }
-
-            Column(modifier = Modifier.weight(3f)) {
+            Column(modifier = Modifier.weight(8f)) {
                 Text(text = "Nama", fontSize = 14.sp)
                 Text("${item.gelar_depan} ${item.nama} ${item.gelar_belakang}", fontSize = 16.sp, fontWeight = FontWeight.Bold)
             }
 
-            Column(modifier = Modifier.weight(3f)) {
-                Text(text = "Pendidikan", fontSize = 14.sp)
-                Text(text = item.pendidikan, fontSize = 16.sp, fontWeight = FontWeight.Bold)
-            }
-
             Icon(
                 Icons.Default.MoreVert,
-                modifier = Modifier
-                    .height(40.dp)
-                    .width(40.dp)
-                    .padding(8.dp)
-                    .weight(1f, true)
-                    .clickable {
-                        expanded = true
-                    },
+                modifier = Modifier.clickable {expanded = true },
                 contentDescription = null,
                 tint = Color.Unspecified
             )
@@ -62,7 +60,7 @@ fun DosenItem(item: Dosen, navController: NavHostController, onDelete: (String) 
         DropdownMenu(
             expanded = expanded,
             onDismissRequest = { expanded = false },
-            offset = DpOffset(x = (-66).dp, y = (-10).dp)
+            offset = DpOffset(x = (-50).dp, y = (-75).dp)
         ) {
             subMenus.forEachIndexed { _, s ->
                 DropdownMenuItem(onClick = {

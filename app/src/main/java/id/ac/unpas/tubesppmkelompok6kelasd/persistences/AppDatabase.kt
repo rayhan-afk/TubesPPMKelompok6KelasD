@@ -6,7 +6,7 @@ import id.ac.unpas.tubesppmkelompok6kelasd.model.Dosen
 import id.ac.unpas.tubesppmkelompok6kelasd.model.Mahasiswa
 import id.ac.unpas.tubesppmkelompok6kelasd.model.Matkul
 
-@Database(entities = [Matkul::class, Dosen::class, Mahasiswa::class], version = 1)
+@Database(entities = [Matkul::class, Dosen::class, Mahasiswa::class], version = 2)
 abstract class AppDatabase : RoomDatabase() {
     //    dosen
     abstract fun dosenDao(): DosenDao

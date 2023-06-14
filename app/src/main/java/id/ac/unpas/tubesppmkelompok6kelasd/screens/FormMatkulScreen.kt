@@ -1,14 +1,12 @@
 package id.ac.unpas.tubesppmkelompok6kelasd.screens
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.OutlinedTextField
-import androidx.compose.material.Text
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -30,12 +28,24 @@ fun FormMatkulScreen(navController : NavHostController, id: String? = null, modi
     val viewModel = hiltViewModel<MatkulViewModel>()
     val kode = remember { mutableStateOf(TextFieldValue("")) }
     val nama = remember { mutableStateOf(TextFieldValue("")) }
-    val sks = remember { mutableStateOf(TextFieldValue("")) }
-    val praktikum = remember { mutableStateOf(TextFieldValue("")) }
+    val sksOptions = listOf(99, 1, 2, 3, 4)
+    val (sks, setSks) = remember { mutableStateOf(sksOptions[0]) }
+    var expandDropdown1 by remember { mutableStateOf(false) }
+    val praktikumOptions = listOf(99, 1, 0)
+    val (praktikum, setPraktikum) = remember { mutableStateOf(praktikumOptions[0]) }
+    var expandDropdown2 by remember { mutableStateOf(false) }
     val deskripsi = remember { mutableStateOf(TextFieldValue("")) }
     val scope = rememberCoroutineScope()
     val isLoading = remember { mutableStateOf(false) }
     val buttonLabel = if (isLoading.value) "Mohon tunggu..." else "Simpan"
+    val icon1 = if (expandDropdown1)
+        Icons.Filled.KeyboardArrowUp
+    else
+        Icons.Filled.KeyboardArrowDown
+    val icon2 = if (expandDropdown2)
+        Icons.Filled.KeyboardArrowUp
+    else
+        Icons.Filled.KeyboardArrowDown
     Column(modifier = Modifier
         .padding(10.dp)
         .fillMaxWidth()) {
@@ -63,31 +73,88 @@ fun FormMatkulScreen(navController : NavHostController, id: String? = null, modi
             KeyboardCapitalization.Characters, keyboardType = KeyboardType.Text),
             placeholder = { Text(text = "XXXXX") }
         )
-        OutlinedTextField(
-            label = { Text(text = "SKS") },
-            value = sks.value,
-            onValueChange = {
-                sks.value = it
-            },
-            modifier = Modifier
-                .padding(4.dp)
-                .fillMaxWidth(),
-            keyboardOptions = KeyboardOptions(keyboardType =
-            KeyboardType.Decimal),
-            placeholder = { Text(text = "2") }
-        )
 
-        OutlinedTextField(
-            label = { Text(text = "Praktikum") },
-            value = praktikum.value,
-            onValueChange = {
-                praktikum.value = it
-            },
-            modifier = Modifier
-                .padding(4.dp)
-                .fillMaxWidth(),
-            placeholder = { Text(text = "IF231") }
-        )
+        Box(
+            modifier = Modifier.padding(top = 8.dp)
+        ){
+            OutlinedTextField(
+                onValueChange = {},
+                enabled = false,
+                value = if (sks == 99) "--Pilih--" else sks.toString(),
+                modifier = Modifier
+                    .padding(4.dp)
+                    .fillMaxWidth()
+                    .clickable { expandDropdown1 = !expandDropdown1 },
+                trailingIcon = {
+                    Icon(icon1, "dropdown icon")
+                },
+                textStyle = TextStyle(color = Color.Black)
+            )
+
+            DropdownMenu(
+                expanded = expandDropdown1,
+                onDismissRequest = { expandDropdown1 = false },
+                modifier = Modifier
+                    .fillMaxWidth()
+            ) {
+                sksOptions.forEach { label ->
+                    DropdownMenuItem(
+                        onClick = {
+                            setSks(label)
+                            expandDropdown1 = false
+                        },
+                        enabled = label != sksOptions[0])
+                    {
+                        Text(text = if (label == 99) "--Pilih--" else label.toString())
+                    }
+                }
+            }
+        }
+
+        Box(
+            modifier = Modifier.padding(top = 8.dp)
+        ){
+            OutlinedTextField(
+                onValueChange = {},
+                enabled = false,
+                value = when (praktikum) {
+                    1 -> "Ya"
+                    0 -> "Tidak"
+                    else -> "--Pilih--"
+                },
+                modifier = Modifier
+                    .padding(4.dp)
+                    .fillMaxWidth()
+                    .clickable { expandDropdown2 = !expandDropdown2 },
+                trailingIcon = {
+                    Icon(icon2, "dropdown icon")
+                },
+                textStyle = TextStyle(color = Color.Black)
+            )
+
+            DropdownMenu(
+                expanded = expandDropdown2,
+                onDismissRequest = { expandDropdown2 = false },
+                modifier = Modifier
+                    .fillMaxWidth()
+            ) {
+                praktikumOptions.forEach { label ->
+                    DropdownMenuItem(
+                        onClick = {
+                            setPraktikum(label)
+                            expandDropdown2 = false
+                        },
+                        enabled = label != praktikumOptions[0])
+                    {
+                        Text(text = when (label) {
+                            1 -> "Ya"
+                            0 -> "Tidak"
+                            else -> "--Pilih--"
+                        })
+                    }
+                }
+            }
+        }
 
         OutlinedTextField(
             label = { Text(text = "Deskrpsi") },
@@ -118,8 +185,8 @@ fun FormMatkulScreen(navController : NavHostController, id: String? = null, modi
                         viewModel.insert(
                             kode.value.text,
                             nama.value.text,
-                            sks.value.text.toInt(),
-                            praktikum.value.text.toInt(),
+                            sks.toInt(),
+                            praktikum.toInt(),
                             deskripsi.value.text
                         )
                     }
@@ -129,8 +196,8 @@ fun FormMatkulScreen(navController : NavHostController, id: String? = null, modi
                             id,
                             kode.value.text,
                             nama.value.text,
-                            sks.value.text.toInt(),
-                            praktikum.value.text.toInt(),
+                            sks.toInt(),
+                            praktikum.toInt(),
                             deskripsi.value.text
                         )
                     }
@@ -148,8 +215,8 @@ fun FormMatkulScreen(navController : NavHostController, id: String? = null, modi
             Button(modifier = Modifier.weight(5f), onClick = {
                 kode.value = TextFieldValue("")
                 nama.value = TextFieldValue("")
-                sks.value = TextFieldValue("")
-                praktikum.value = TextFieldValue("")
+                setSks(sksOptions[0])
+                setPraktikum(praktikumOptions[0])
                 deskripsi.value = TextFieldValue("")
             }, colors = resetButtonColors) {
                 Text(
@@ -172,8 +239,8 @@ fun FormMatkulScreen(navController : NavHostController, id: String? = null, modi
                 matkul?.let {
                     kode.value = TextFieldValue(matkul.kode)
                     nama.value = TextFieldValue(matkul.nama)
-                    sks.value = TextFieldValue(matkul.sks.toString())
-                    praktikum.value = TextFieldValue(matkul.praktikum.toString())
+                    setSks(matkul.sks)
+                    setPraktikum(matkul.praktikum)
                     deskripsi.value = TextFieldValue(matkul.deskripsi)
                 }
             }

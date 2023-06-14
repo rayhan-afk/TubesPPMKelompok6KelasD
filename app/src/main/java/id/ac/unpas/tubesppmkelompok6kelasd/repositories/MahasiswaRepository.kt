@@ -58,12 +58,12 @@ class MahasiswaRepository @Inject constructor(
             .suspendOnSuccess {
                 onSuccess(item)
             }
-// handle the case when the API request gets an rror response.
+// handle the case when the API request gets an error response.
 // e.g. internal server error.
             .suspendOnError {
                 onError(item, message())
             }
-// handle the case when the API request gets an xception response.
+// handle the case when the API request gets an exception response.
 // e.g. network connection error.
             .suspendOnException {
                 onError(item, message())

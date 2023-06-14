@@ -4,8 +4,11 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
@@ -29,49 +32,49 @@ NavHostController, onDelete: (String) -> Unit) {
         Row(modifier = Modifier
             .padding(15.dp)
             .fillMaxWidth()) {
-            Column(modifier = Modifier.weight(3f)) {
+            Column(modifier = Modifier.weight(2f)) {
                 Text(text = "Kode", fontSize = 14.sp)
                 Text(item.kode, fontSize = 16.sp, fontWeight = FontWeight.Bold)
             }
-
             Column(modifier = Modifier.weight(3f)) {
                 Text(text = "Nama", fontSize = 14.sp)
-                Text(text = item.nama, fontSize = 16.sp,
-                    fontWeight = FontWeight.Bold)
+                Text(text = item.nama, fontSize = 16.sp, fontWeight = FontWeight.Bold)
             }
-
-            Column(modifier = Modifier.weight(3f)) {
+            Column(modifier = Modifier.weight(1f), horizontalAlignment = Alignment.CenterHorizontally) {
                 Text(text = "SKS", fontSize = 14.sp)
                 Text(text = "${item.sks}", fontSize = 16.sp, fontWeight = FontWeight.Bold)
             }
-
-            Column(modifier = Modifier.weight(3f)) {
+            Column(modifier = Modifier.weight(2f), horizontalAlignment = Alignment.CenterHorizontally) {
                 Text(text = "Praktikum", fontSize = 14.sp)
-                Text(text = item.praktikum.toString(), fontSize = 16.sp, fontWeight = FontWeight.Bold)
+                Icon(
+                    imageVector = if (item.praktikum == 1) Icons.Default.Check else Icons.Default.Clear,
+                    contentDescription = "Status Praktikum",
+                    tint = if (item.praktikum == 1) Color.Green else Color.Red,
+                    modifier = Modifier.size(24.dp)
+                )
             }
 
-            Column(modifier = Modifier.weight(3f)) {
-                Text(text = "Deskripsi", fontSize = 14.sp)
-                Text(item.deskripsi, fontSize = 16.sp, fontWeight = FontWeight.Bold)
-            }
             Icon(
                 Icons.Default.MoreVert,
-                modifier = Modifier
-                    .height(40.dp)
-                    .width(40.dp)
-                    .padding(0.dp)
-                    .weight(1f, true)
-                    .clickable {
-                        expanded = true
-                    },
+                modifier = Modifier.clickable {expanded = true },
                 contentDescription = null,
                 tint = Color.Unspecified
             )
         }
+        Row(
+            modifier = Modifier
+                .padding(15.dp)
+                .fillMaxWidth()
+        ) {
+            Column(modifier = Modifier.weight(2f)) {
+                Text(text = "Deskripsi", fontSize = 14.sp)
+                Text(item.deskripsi, fontSize = 16.sp, fontWeight = FontWeight.Bold)
+            }
+        }
         DropdownMenu(
             expanded = expanded,
             onDismissRequest = { expanded = false },
-            offset = DpOffset(x = (-66).dp, y = (-10).dp)
+            offset = DpOffset(x = (-50).dp, y = (-125).dp)
         ) {
             subMenus.forEachIndexed { _, s ->
                 DropdownMenuItem(onClick = {

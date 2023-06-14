@@ -1,15 +1,12 @@
 package id.ac.unpas.tubesppmkelompok6kelasd.screens
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.OutlinedTextField
-import androidx.compose.material.Text
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -36,11 +33,17 @@ fun FormMahasiswaScreen(navController : NavHostController, id: String? = null, m
     val npm = remember { mutableStateOf(TextFieldValue("")) }
     val nama = remember { mutableStateOf(TextFieldValue("")) }
     val tanggal_lahir = remember { mutableStateOf(TextFieldValue("")) }
-    val jenis_kelamin = remember { mutableStateOf(TextFieldValue("")) }
+    val jenisKelaminOptions = listOf("--Pilih--", "Laki-laki" ,"Perempuan")
+    val (jenis_kelamin, setJenisKelamin) = remember { mutableStateOf(jenisKelaminOptions[0]) }
+    var expandDropdown by remember { mutableStateOf(false) }
     val tanggalDialogState = rememberMaterialDialogState()
     val scope = rememberCoroutineScope()
     val isLoading = remember { mutableStateOf(false) }
     val buttonLabel = if (isLoading.value) "Mohon tunggu..." else "Simpan"
+    val icon = if (expandDropdown)
+        Icons.Filled.KeyboardArrowUp
+    else
+        Icons.Filled.KeyboardArrowDown
     Column(modifier = Modifier
         .padding(10.dp)
         .fillMaxWidth()) {
@@ -84,17 +87,42 @@ fun FormMahasiswaScreen(navController : NavHostController, id: String? = null, m
             enabled = false
         )
 
-        OutlinedTextField(
-            label = { Text(text = "Jenis Kelamin") },
-            value = jenis_kelamin.value,
-            onValueChange = {
-                jenis_kelamin.value = it
-            },
-            modifier = Modifier
-                .padding(4.dp)
-                .fillMaxWidth(),
-            placeholder = { Text(text = "L/P") }
-        )
+        Box(
+            modifier = Modifier.padding(top = 8.dp)
+        ){
+            OutlinedTextField(
+                onValueChange = {},
+                enabled = false,
+                value = jenis_kelamin,
+                modifier = Modifier
+                    .padding(4.dp)
+                    .fillMaxWidth()
+                    .clickable { expandDropdown = !expandDropdown },
+                trailingIcon = {
+                    Icon(icon, "dropdown icon")
+                },
+                textStyle = TextStyle(color = Color.Black)
+            )
+
+            DropdownMenu(
+                expanded = expandDropdown,
+                onDismissRequest = { expandDropdown = false },
+                modifier = Modifier
+                    .fillMaxWidth()
+            ) {
+                jenisKelaminOptions.forEach { label ->
+                    DropdownMenuItem(
+                        onClick = {
+                            setJenisKelamin(label)
+                            expandDropdown = false
+                        },
+                        enabled = label != jenisKelaminOptions[0])
+                    {
+                        Text(text = label)
+                    }
+                }
+            }
+        }
 
         val loginButtonColors = ButtonDefaults.buttonColors(
             backgroundColor = Purple700,
@@ -114,7 +142,7 @@ fun FormMahasiswaScreen(navController : NavHostController, id: String? = null, m
                             npm.value.text,
                             nama.value.text,
                             tanggal_lahir.value.text,
-                            jenis_kelamin.value.text
+                            jenis_kelamin
                         )
                     }
                 } else {
@@ -124,7 +152,7 @@ fun FormMahasiswaScreen(navController : NavHostController, id: String? = null, m
                             npm.value.text,
                             nama.value.text,
                             tanggal_lahir.value.text,
-                            jenis_kelamin.value.text
+                            jenis_kelamin
                         )
                     }
                 }
@@ -142,7 +170,7 @@ fun FormMahasiswaScreen(navController : NavHostController, id: String? = null, m
                 npm.value = TextFieldValue("")
                 nama.value = TextFieldValue("")
                 tanggal_lahir.value = TextFieldValue("")
-                jenis_kelamin.value = TextFieldValue("")
+                setJenisKelamin(jenisKelaminOptions[0])
             }, colors = resetButtonColors) {
                 Text(
                     text = "Reset",
@@ -165,7 +193,7 @@ fun FormMahasiswaScreen(navController : NavHostController, id: String? = null, m
                     npm.value = TextFieldValue(mahasiswa.npm)
                     nama.value = TextFieldValue(mahasiswa.nama)
                     tanggal_lahir.value = TextFieldValue(mahasiswa.tanggal_lahir)
-                    jenis_kelamin.value = TextFieldValue(mahasiswa.jenis_kelamin)
+                    setJenisKelamin(mahasiswa.jenis_kelamin)
                 }
             }
         }

@@ -1,14 +1,12 @@
 package id.ac.unpas.tubesppmkelompok6kelasd.screens
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.OutlinedTextField
-import androidx.compose.material.Text
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -32,10 +30,16 @@ fun FormDosenScreen(navController : NavHostController, id: String? = null, modif
     val nama = remember { mutableStateOf(TextFieldValue("")) }
     val gelar_depan = remember { mutableStateOf(TextFieldValue("")) }
     val gelar_belakang = remember { mutableStateOf(TextFieldValue("")) }
-    val pendidikan = remember { mutableStateOf(TextFieldValue("")) }
+    val pendidikanOptions = listOf("--Pilih--", "S2" ,"S3")
+    val (pendidikan, setPendidikan) = remember { mutableStateOf(pendidikanOptions[0]) }
+    var expandDropdown by remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
     val isLoading = remember { mutableStateOf(false) }
     val buttonLabel = if (isLoading.value) "Mohon tunggu..." else "Simpan"
+    val icon = if (expandDropdown)
+        Icons.Filled.KeyboardArrowUp
+    else
+        Icons.Filled.KeyboardArrowDown
     Column(modifier = Modifier
         .padding(10.dp)
         .fillMaxWidth()) {
@@ -92,19 +96,42 @@ fun FormDosenScreen(navController : NavHostController, id: String? = null, modif
             placeholder = { Text(text = "XXXXX") }
         )
 
-        OutlinedTextField(
-            label = { Text(text = "Pendidikan") },
-            value = pendidikan.value,
-            onValueChange = {
-                pendidikan.value = it
-            },
-            modifier = Modifier
-                .padding(4.dp)
-                .fillMaxWidth(),
-            keyboardOptions = KeyboardOptions(capitalization =
-            KeyboardCapitalization.Characters, keyboardType = KeyboardType.Text),
-            placeholder = { Text(text = "XXXXX") }
-        )
+        Box(
+            modifier = Modifier.padding(top = 8.dp)
+        ){
+            OutlinedTextField(
+                onValueChange = {},
+                enabled = false,
+                value = pendidikan,
+                modifier = Modifier
+                    .padding(4.dp)
+                    .fillMaxWidth()
+                    .clickable { expandDropdown = !expandDropdown },
+                trailingIcon = {
+                    Icon(icon, "dropdown icon")
+                },
+                textStyle = TextStyle(color = Color.Black)
+            )
+
+            DropdownMenu(
+                expanded = expandDropdown,
+                onDismissRequest = { expandDropdown = false },
+                modifier = Modifier
+                    .fillMaxWidth()
+            ) {
+                pendidikanOptions.forEach { label ->
+                    DropdownMenuItem(
+                        onClick = {
+                            setPendidikan(label)
+                            expandDropdown = false
+                        },
+                        enabled = label != pendidikanOptions[0])
+                    {
+                        Text(text = label)
+                    }
+                }
+            }
+        }
 
         val loginButtonColors = ButtonDefaults.buttonColors(
             backgroundColor = Purple700,
@@ -125,7 +152,7 @@ fun FormDosenScreen(navController : NavHostController, id: String? = null, modif
                             nama.value.text,
                             gelar_depan.value.text,
                             gelar_belakang.value.text,
-                            pendidikan.value.text
+                            pendidikan
                         )
                     }
                 } else {
@@ -136,7 +163,7 @@ fun FormDosenScreen(navController : NavHostController, id: String? = null, modif
                             nama.value.text,
                             gelar_depan.value.text,
                             gelar_belakang.value.text,
-                            pendidikan.value.text
+                            pendidikan
                         )
                     }
                 }
@@ -155,7 +182,7 @@ fun FormDosenScreen(navController : NavHostController, id: String? = null, modif
                 nama.value = TextFieldValue("")
                 gelar_depan.value = TextFieldValue("")
                 gelar_belakang.value = TextFieldValue("")
-                pendidikan.value = TextFieldValue("")
+                setPendidikan(pendidikanOptions[0])
             }, colors = resetButtonColors) {
                 Text(
                     text = "Reset",
@@ -179,7 +206,7 @@ fun FormDosenScreen(navController : NavHostController, id: String? = null, modif
                     nama.value = TextFieldValue(dosen.nama)
                     gelar_depan.value = TextFieldValue(dosen.gelar_depan)
                     gelar_belakang.value = TextFieldValue(dosen.gelar_belakang)
-                    pendidikan.value = TextFieldValue(dosen.pendidikan)
+                    setPendidikan(dosen.pendidikan)
                 }
             }
         }

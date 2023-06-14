@@ -3,10 +3,12 @@ package id.ac.unpas.tubesppmkelompok6kelasd.screens
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import id.ac.unpas.tubesppmkelompok6kelasd.model.Matkul
 import id.ac.unpas.tubesppmkelompok6kelasd.repositories.MatkulRepository
 import javax.inject.Inject
 
+@HiltViewModel
 class MatkulViewModel @Inject constructor(private val matkulRepository: MatkulRepository) : ViewModel()
 {
     private val _isLoading: MutableLiveData<Boolean> =
