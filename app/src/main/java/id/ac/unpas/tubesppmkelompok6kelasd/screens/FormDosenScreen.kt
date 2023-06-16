@@ -32,7 +32,7 @@ fun FormDosenScreen(navController : NavHostController, id: String? = null, modif
     val nama = remember { mutableStateOf(TextFieldValue("")) }
     val gelar_depan = remember { mutableStateOf(TextFieldValue("")) }
     val gelar_belakang = remember { mutableStateOf(TextFieldValue("")) }
-    val pendidikanOptions = listOf("--Pilih--", "S2" ,"S3")
+    val pendidikanOptions = listOf("--Pendidikan--", "S2" ,"S3")
     val (pendidikan, setPendidikan) = remember { mutableStateOf(pendidikanOptions[0]) }
     var expandDropdown by remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
@@ -56,7 +56,7 @@ fun FormDosenScreen(navController : NavHostController, id: String? = null, modif
                 .fillMaxWidth(),
             keyboardOptions = KeyboardOptions(keyboardType =
             KeyboardType.Decimal),
-            placeholder = { Text(text = "2") }
+            placeholder = { Text(text = "2000xxx") }
         )
         OutlinedTextField(
             label = { Text(text = "Nama") },
@@ -67,7 +67,7 @@ fun FormDosenScreen(navController : NavHostController, id: String? = null, modif
             modifier = Modifier
                 .padding(4.dp)
                 .fillMaxWidth(),
-            placeholder = { Text(text = "IF231") }
+            placeholder = { Text(text = "Nama") }
         )
         OutlinedTextField(
             label = { Text(text = "Gelar Depan") },
@@ -85,7 +85,7 @@ fun FormDosenScreen(navController : NavHostController, id: String? = null, modif
 
 
         OutlinedTextField(
-            label = { Text(text = "Gelar Belakag") },
+            label = { Text(text = "Gelar Belakang") },
             value = gelar_belakang.value,
             onValueChange = {
                 gelar_belakang.value = it

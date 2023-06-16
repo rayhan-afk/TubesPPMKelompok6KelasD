@@ -73,7 +73,7 @@ fun FormMatkulScreen(navController : NavHostController, id: String? = null, modi
                 .fillMaxWidth(),
             keyboardOptions = KeyboardOptions(capitalization =
             KeyboardCapitalization.Characters, keyboardType = KeyboardType.Text),
-            placeholder = { Text(text = "XXXXX") }
+            placeholder = { Text(text = "Nama") }
         )
 
         Box(
@@ -82,7 +82,7 @@ fun FormMatkulScreen(navController : NavHostController, id: String? = null, modi
             OutlinedTextField(
                 onValueChange = {},
                 enabled = false,
-                value = if (sks == 99) "--Pilih--" else sks.toString(),
+                value = if (sks == 99) "--SKS--" else sks.toString(),
                 modifier = Modifier
                     .padding(4.dp)
                     .fillMaxWidth()
@@ -107,7 +107,7 @@ fun FormMatkulScreen(navController : NavHostController, id: String? = null, modi
                         },
                         enabled = label != sksOptions[0])
                     {
-                        Text(text = if (label == 99) "--Pilih--" else label.toString())
+                        Text(text = if (label == 99) "--SKS--" else label.toString())
                     }
                 }
             }
@@ -122,7 +122,7 @@ fun FormMatkulScreen(navController : NavHostController, id: String? = null, modi
                 value = when (praktikum) {
                     1 -> "Ya"
                     0 -> "Tidak"
-                    else -> "--Pilih--"
+                    else -> "--Praktikum--"
                 },
                 modifier = Modifier
                     .padding(4.dp)
@@ -151,7 +151,7 @@ fun FormMatkulScreen(navController : NavHostController, id: String? = null, modi
                         Text(text = when (label) {
                             1 -> "Ya"
                             0 -> "Tidak"
-                            else -> "--Pilih--"
+                            else -> "--Praktikum--"
                         })
                     }
                 }
@@ -159,7 +159,7 @@ fun FormMatkulScreen(navController : NavHostController, id: String? = null, modi
         }
 
         OutlinedTextField(
-            label = { Text(text = "Deskrpsi") },
+            label = { Text(text = "Deskripsi") },
             value = deskripsi.value,
             onValueChange = {
                 deskripsi.value = it

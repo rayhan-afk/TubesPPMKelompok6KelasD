@@ -35,7 +35,7 @@ fun FormMahasiswaScreen(navController : NavHostController, id: String? = null, m
     val npm = remember { mutableStateOf(TextFieldValue("")) }
     val nama = remember { mutableStateOf(TextFieldValue("")) }
     val tanggal_lahir = remember { mutableStateOf(TextFieldValue("")) }
-    val jenisKelaminOptions = listOf("--Pilih--", "Laki-laki" ,"Perempuan")
+    val jenisKelaminOptions = listOf("--Jenis Kelamin--", "Laki-laki" ,"Perempuan")
     val (jenis_kelamin, setJenisKelamin) = remember { mutableStateOf(jenisKelaminOptions[0]) }
     var expandDropdown by remember { mutableStateOf(false) }
     val tanggalDialogState = rememberMaterialDialogState()
@@ -58,7 +58,7 @@ fun FormMahasiswaScreen(navController : NavHostController, id: String? = null, m
             modifier = Modifier
                 .padding(4.dp)
                 .fillMaxWidth(),
-            placeholder = { Text(text = "NPM") },
+            placeholder = { Text(text = "1930*****") },
         )
         OutlinedTextField(
             label = { Text(text = "Nama") },
@@ -71,7 +71,7 @@ fun FormMahasiswaScreen(navController : NavHostController, id: String? = null, m
                 .fillMaxWidth(),
             keyboardOptions = KeyboardOptions(capitalization =
             KeyboardCapitalization.Characters, keyboardType = KeyboardType.Text),
-            placeholder = { Text(text = "XXXXX") }
+            placeholder = { Text(text = "Nama") }
         )
         OutlinedTextField(
             label = { Text(text = "Tanggal Lahir") },
